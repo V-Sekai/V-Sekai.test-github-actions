@@ -10,14 +10,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Create empty file
-        run: touch my_empty_file.txt
+      - name: Create file with content
+        run: echo "This is my file content" > my_file.txt
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: my-artifact
-          path: my_empty_file.txt
+          path: my_file.txt
 
   release:
     needs: create-and-upload-artifact
@@ -34,4 +34,4 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: ./my_empty_file.txt
+          files: ./my_file.txt
