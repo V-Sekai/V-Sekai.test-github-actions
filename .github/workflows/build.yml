@@ -10,14 +10,30 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Create file with content
-        run: echo "This is my file content" > my_file.txt
+      - name: Create placeholders
+        run: |
+          echo "Creating placeholders..."
+          echo "This is a placeholder for game.exe" > game.exe
+          echo "This is a placeholder for game_editor.exe" > game_editor.exe
+          echo "This is a placeholder for game.pck" > game.pck
 
-      - name: Upload artifact
+      - name: Upload game executable
         uses: actions/upload-artifact@v2
         with:
-          name: my-artifact
-          path: my_file.txt
+          name: game-executable
+          path: game.exe
+
+      - name: Upload game editor
+        uses: actions/upload-artifact@v2
+        with:
+          name: game-editor
+          path: game_editor.exe
+
+      - name: Upload game pck
+        uses: actions/upload-artifact@v2
+        with:
+          name: game-pck
+          path: game.pck
 
   release:
     needs: create-and-upload-artifact
@@ -25,16 +41,26 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/')
     
     steps:
-      - name: Download artifact
+      - name: Download game executable
         uses: actions/download-artifact@v2
         with:
-          name: my-artifact
+          name: game-executable
+
+      - name: Download game editor
+        uses: actions/download-artifact@v2
+        with:
+          name: game-editor
+
+      - name: Download game pck
+        uses: actions/download-artifact@v2
+        with:
+          name: game-pck
 
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: ./my_file.txt
+          files: ./game.exe ./game_editor.exe ./game.pck
           body: "This is a V-Sekai/V-Sekai.test-github-actions release"
           generate_release_notes: true
           append_body: true
