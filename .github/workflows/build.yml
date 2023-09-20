@@ -35,3 +35,6 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: ./my_file.txt
+          body: "This is a V-Sekai/V-Sekai.test-github-actions release"
+          generate_release_notes: true
+          append_body: true
