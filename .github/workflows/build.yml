@@ -1,35 +1,39 @@
-jobs:  
-  create-and-upload-artifact: 
-      runs-on: ubuntu-latest 
-  
-      steps: 
-        - name: Checkout code 
-          uses: actions/checkout@v2 
-  
-        - name: Create placeholders 
-          run: | 
-            echo "Creating placeholders..." 
-            echo "This is a placeholder for game.exe" > game.exe 
-            echo "This is a placeholder for game_editor.exe" > game_editor.exe 
-            echo "This is a placeholder for game.pck" > game.pck 
-  
-        - name: Upload game executable 
-          uses: actions/upload-artifact@v2 
-          with: 
-            name: game-executable 
-            path: game.exe 
-  
-        - name: Upload game editor 
-          uses: actions/upload-artifact@v2 
-          with: 
-            name: game-editor 
-            path: game_editor.exe 
-  
-        - name: Upload game pck 
-          uses: actions/upload-artifact@v2 
-          with: 
-            name: game-pck 
-            path: game.pck 
+name: 🔗 GHA
+
+on: [push, pull_request]
+
+jobs:
+  create-and-upload-artifact:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create placeholders
+        run: |
+          echo "Creating placeholders..."
+          echo "This is a placeholder for game.exe" > game.exe
+          echo "This is a placeholder for game_editor.exe" > game_editor.exe
+          echo "This is a placeholder for game.pck" > game.pck
+
+      - name: Upload game executable
+        uses: actions/upload-artifact@v2
+        with:
+          name: game-executable
+          path: game.exe
+
+      - name: Upload game editor
+        uses: actions/upload-artifact@v2
+        with:
+          name: game-editor
+          path: game_editor.exe
+
+      - name: Upload game pck
+        uses: actions/upload-artifact@v2
+        with:
+          name: game-pck
+          path: game.pck
   
 
   release:
